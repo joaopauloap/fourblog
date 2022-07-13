@@ -1,0 +1,14 @@
+<h1>FourTask - Gestão de Tarefas</h1>
+ <br>
+Projeto avaliativo individual da Stack de ASP.NET C#
+ <br>
+[Leia-Me](Projeto%20FourTask%20-%20Avaliação%20Final.pdf)
+ <br>
+  <br>
+Front: ASP.NET Core MVC,  Bootstrap 5.2, HTML/JS/CSS 
+ <br>
+Back: ASP.NET Core MVC, Identity Framework, Entity Framework
+ <br>
+DB: Microsoft SQL Server (Local)
+ <br>
+Repository Pattern

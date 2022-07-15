@@ -7,11 +7,15 @@
     <div class="card mb-5 mx-auto w-50">
         <div class="card-header">
             <div class="row">
-                <div class="col-8">
-                    @postagem.Usuario.Nome
+                <div class="col">
+                    Por: @postagem.Usuario.Nome
+                </div>
+                <div class="col text-center">
+                    <span class="badge rounded-pill bg-primary">@postagem.Tag.Nome</span>
                 </div>
                 <div class="col text-end">
-                    @postagem.DataCriacao.ToShortDateString()
+                    
+                    @postagem.DataCriacao.ToString("dd/MM/yyyy - hh:mm")
                 </div>
             </div>
         </div>
@@ -20,7 +24,9 @@
             <p class="card-text">@postagem.Texto</p>
         </div>
         <div class="card-footer text-muted">
-            <a href="#">Ver comentários</a>
+            <div class="row">
+                <a asp-action="Visualizar" asp-route-id="@postagem.PostagemId">Abrir postagem</a>
+            </div>
         </div>
     </div>
 }

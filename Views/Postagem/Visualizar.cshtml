@@ -1,1 +1,29 @@
-﻿
+﻿@model Postagem
+
+<a asp-action="Index">Voltar para postagens</a>
+
+    <div class="card mb-5 mx-auto w-50">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    Por: @Model.Usuario.Nome
+                </div>
+                <div class="col text-center">
+                    <span class="badge rounded-pill bg-primary">@Model.Tag.Nome</span>
+                </div>
+                <div class="col text-end">
+                    
+                    @Model.DataCriacao.ToString("dd/MM/yyyy - hh:mm")
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Titulo</h5>
+            <p class="card-text">@Model.Texto</p>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="row">
+                <a href="#">Ver Comentários</a>
+            </div>
+        </div>
+    </div>

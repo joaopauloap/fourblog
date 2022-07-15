@@ -17,7 +17,7 @@ namespace FourBlog.Controllers
     
         public IActionResult Index()
         {
-            var Postagens = _context.Postagens.Include(p=>p.Usuario).ToList();
+            var Postagens = _context.Postagens.Include(p=>p.Usuario).Include(p=>p.Tag).ToList();
             return View(Postagens);
         }
 
@@ -29,10 +29,10 @@ namespace FourBlog.Controllers
             return View();
         }
 
-        public IActionResult Visualizar()
+        public IActionResult Visualizar(int id)
         {
-
-            return View();
+            Postagem postagem = _context.Postagens.Where(p=>p.PostagemId == id).Include(p=>p.Usuario).Include(p=>p.Tag).FirstOrDefault();
+            return View(postagem);
         }
 
         [HttpPost]

@@ -1,1 +1,26 @@
-﻿
+﻿@model List<Postagem>
+
+<a asp-action="Cadastrar">Cadastar postagem</a>
+
+@foreach (Postagem postagem in Model)
+{
+    <div class="card mb-5 mx-auto w-50">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-8">
+                    @postagem.Usuario.Nome
+                </div>
+                <div class="col text-end">
+                    @postagem.DataCriacao.ToShortDateString()
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@postagem.Titulo</h5>
+            <p class="card-text">@postagem.Texto</p>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="#">Ver comentários</a>
+        </div>
+    </div>
+}

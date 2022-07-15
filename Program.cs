@@ -7,11 +7,14 @@ var connectionString = builder.Configuration.GetConnectionString("FourBlogContex
 builder.Services.AddDbContext<FourBlogContext>(options =>
     options.UseSqlServer(connectionString));;
 
-builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<FourBlogContext>();;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 
@@ -24,9 +27,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication();;
-
 app.UseAuthorization();
-
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FourBlog.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FourBlog.Models
@@ -8,6 +11,8 @@ namespace FourBlog.Models
     {
         public Postagem()
         {
+            IHttpContextAccessor accessor = new HttpContextAccessor();
+            UsuarioId = accessor.HttpContext.User.Claims.First().Value;
             DataCriacao = DateTime.Now;
         }
 
@@ -23,7 +28,9 @@ namespace FourBlog.Models
         public DateTime DataCriacao { get; set; }
 
         //Relacionamentos
-        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
+        public string UsuarioId { get; set; }
+        public Tag Tag { get; set; }
         public int TagId { get; set; }
     }
 }

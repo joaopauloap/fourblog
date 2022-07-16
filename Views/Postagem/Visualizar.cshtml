@@ -1,6 +1,8 @@
 ﻿@model Postagem
-
-<a asp-action="Index">Voltar para postagens</a>
+@{
+    ViewData["Title"] = "Visualizar Postagem";
+}
+<a asp-action="Index"><i class="fa-solid fa-circle-left fa-2x"></i> Voltar para postagens</a>
 
     <div class="card mb-5 mx-auto w-50">
         <div class="card-header">
@@ -23,7 +25,7 @@
         </div>
         <div class="card-footer text-muted">
             <div class="row">
-                <a href="#">Ver Comentários</a>
+                <a href="#">Ver Comentários <i class="fa-solid fa-comments ms-2"></i></a>
             </div>
         </div>
     </div>

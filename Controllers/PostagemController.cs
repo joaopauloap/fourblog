@@ -14,10 +14,12 @@ namespace FourBlog.Controllers
         {
             _context = context;
         }
-    
-        public IActionResult Index()
+
+        public IActionResult Index(string tag)
         {
-            var Postagens = _context.Postagens.Include(p=>p.Usuario).Include(p=>p.Tag).ToList();
+            var Postagens = _context.Postagens.Include(p=>p.Usuario).Include(p=>p.Tag).Where(p=>p.Tag.Nome.Contains(tag) || tag == null).ToList();
+            List<Tag> ListaTags = _context.Tags.ToList();
+            ViewBag.Tags = new SelectList(ListaTags, "Nome", "Nome");
             return View(Postagens);
         }
 

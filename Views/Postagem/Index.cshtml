@@ -1,6 +1,26 @@
 ﻿@model List<Postagem>
 
-<a asp-action="Cadastrar">Cadastar postagem</a>
+@{
+    ViewData["Title"] = "Postagens";
+}
+
+
+<a class="btn-fixed" asp-action="Cadastrar"><i class="fa-solid fa-circle-plus fa-3x"></i><label class="badge bg-primary text-wrap hide mt-1">Nova Postagem</label></a>
+
+<div class="text-center mb-4 mx-auto w-50">
+    <h1>Postagens FourBlog</h1>
+    <div class="form-floating mt-4">
+        <form asp-action="Index">
+            <div class="input-group">
+                <select name="tag" class="form-select col-1" asp-items="@ViewBag.Tags">
+                    <option value="">Tags...</option>
+                </select>
+                <input type="text" class="form-control" name="tag" placeholder="Filtrar por Tag" />
+                <button type="submit" class="btn btn-outline-primary btn-sm input-group-text"><i class="fa-solid fa-magnifying-glass"></i> </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 @foreach (Postagem postagem in Model)
 {
@@ -14,7 +34,6 @@
                     <span class="badge rounded-pill bg-primary">@postagem.Tag.Nome</span>
                 </div>
                 <div class="col text-end">
-                    
                     @postagem.DataCriacao.ToString("dd/MM/yyyy - hh:mm")
                 </div>
             </div>

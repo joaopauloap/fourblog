@@ -11,8 +11,13 @@ namespace FourBlog.Models
     {
         public Postagem()
         {
+            //Codigo para Obter Id do usuario logado, fora de um controller
             IHttpContextAccessor accessor = new HttpContextAccessor();
-            UsuarioId = accessor.HttpContext.User.Claims.First().Value;
+            if (accessor.HttpContext.User.Identity.IsAuthenticated == true)
+            {
+                UsuarioId = accessor.HttpContext.User.Claims.First().Value;
+            }
+
             DataCriacao = DateTime.Now;
         }
 

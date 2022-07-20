@@ -4,6 +4,7 @@ using FourBlog.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FourBlog.Migrations
 {
     [DbContext(typeof(FourBlogContext))]
-    partial class FourBlogContextModelSnapshot : ModelSnapshot
+    [Migration("20220720003517_comentarios")]
+    partial class comentarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,7 +125,7 @@ namespace FourBlog.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("tb_comentario", (string)null);
+                    b.ToTable("tb_comentario");
                 });
 
             modelBuilder.Entity("FourBlog.Models.Postagem", b =>
@@ -159,7 +161,7 @@ namespace FourBlog.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("tb_postagem", (string)null);
+                    b.ToTable("tb_postagem");
                 });
 
             modelBuilder.Entity("FourBlog.Models.Tag", b =>
@@ -177,7 +179,7 @@ namespace FourBlog.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("tb_tag", (string)null);
+                    b.ToTable("tb_tag");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -12,7 +12,7 @@
     <div class="form-floating mt-4">
         <form asp-action="Index">
             <div class="input-group">
-                <select name="tag" class="form-select col-1" asp-items="@ViewBag.Tags">
+                <select name="tag" class="form-select" asp-items="@ViewBag.Tags">
                     <option value="">Tags...</option>
                 </select>
                 <input type="text" class="form-control" name="tag" placeholder="Filtrar por Tag" />

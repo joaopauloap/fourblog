@@ -1,31 +1,71 @@
-﻿@model Postagem
+﻿@inject SignInManager<Usuario> SignInManager
+@model Postagem
+
 @{
     ViewData["Title"] = "Visualizar Postagem";
 }
-<a asp-action="Index"><i class="fa-solid fa-circle-left fa-2x"></i> Voltar para postagens</a>
 
-    <div class="card mb-5 mx-auto w-50">
-        <div class="card-header">
-            <div class="row">
-                <div class="col">
-                    Por: @Model.Usuario.Nome
-                </div>
-                <div class="col text-center">
-                    <span class="badge rounded-pill bg-primary">@Model.Tag.Nome</span>
-                </div>
-                <div class="col text-end">
-                    
-                    @Model.DataCriacao.ToString("dd/MM/yyyy - hh:mm")
-                </div>
+<a asp-action="Index" class="d-flex text-decoration-none">
+    <i class="fa-solid fa-circle-left fa-2x me-2"></i>
+    Voltar para postagens
+</a>
+
+<div class="card mb-5 mx-auto w-50">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                Por: @Model.Usuario.Nome
             </div>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">@Model.Titulo</h5>
-            <p class="card-text">@Model.Texto</p>
-        </div>
-        <div class="card-footer text-muted">
-            <div class="row">
-                <a href="#">Ver Comentários <i class="fa-solid fa-comments ms-2"></i></a>
+            <div class="col text-center">
+                <span class="badge rounded-pill bg-primary">@Model.Tag.Nome</span>
+            </div>
+            <div class="col text-end">
+
+                @Model.DataCriacao.ToString("dd/MM/yyyy - hh:mm")
             </div>
         </div>
     </div>
+    <div class="card-body">
+        <h5 class="card-title">@Model.Titulo</h5>
+        <p class="card-text">@Model.Texto</p>
+    </div>
+    <div class="card-footer text-muted">
+        <div class="row">
+            <a data-bs-toggle="collapse" href="#collapseComentarios">Ver Comentários <i class="fa-solid fa-comments ms-2"></i></a>
+        </div>
+        <div class="collapse mt-4" id="collapseComentarios">
+            <div>
+                @foreach (Comentario comentario in Model.Comentarios)
+                {
+                    <div class="mb-3">
+                        <p>
+                            <b>@comentario.Usuario.Nome</b>: @comentario.Texto
+                            <span class="badge text-black-50 bg-opacity-75">
+                                @comentario.DataHora
+                            </span>
+                        </p>
+                    </div>
+                }
+            </div>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <form asp-action="Comentar">
+                    <input type="hidden" name="PostagemId" value="@Model.PostagemId">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="Texto" placeholder="Comentar postagem...">
+                        <button class="btn btn-link" type="submit">
+                            <i class="fa-solid fa-play fa-2x"></i>
+                        </button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p><a asp-area="Identity" asp-page="/Account/Login">Entre</a> para comentar.</p>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

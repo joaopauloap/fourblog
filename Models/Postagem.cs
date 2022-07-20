@@ -11,12 +11,12 @@ namespace FourBlog.Models
     {
         public Postagem()
         {
-            //Codigo para Obter Id do usuario logado, fora de um controller
-            IHttpContextAccessor accessor = new HttpContextAccessor();
-            if (accessor.HttpContext.User.Identity.IsAuthenticated == true)
-            {
-                UsuarioId = accessor.HttpContext.User.Claims.First().Value;
-            }
+            ////Codigo para Obter Id do usuario logado, fora de um controller
+            //IHttpContextAccessor accessor = new HttpContextAccessor();
+            //if (accessor.HttpContext.User.Identity.IsAuthenticated == true)
+            //{
+            //    UsuarioId = accessor.HttpContext.User.Claims.First().Value;
+            //}
 
             DataCriacao = DateTime.Now;
         }
@@ -37,5 +37,6 @@ namespace FourBlog.Models
         public string UsuarioId { get; set; }
         public Tag Tag { get; set; }
         public int TagId { get; set; }
+        public List<Comentario>? Comentarios { get; set; }
     }
 }

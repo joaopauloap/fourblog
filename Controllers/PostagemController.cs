@@ -1,6 +1,7 @@
 ﻿using FourBlog.Areas.Identity.Data;
 using FourBlog.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +11,11 @@ namespace FourBlog.Controllers
     public class PostagemController : Controller
     {
         private FourBlogContext _context;
-        public PostagemController(FourBlogContext context)
+        private UserManager<Usuario> _userManager;
+        public PostagemController(FourBlogContext context, UserManager<Usuario> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index(string tag)
@@ -33,18 +36,32 @@ namespace FourBlog.Controllers
 
         public IActionResult Visualizar(int id)
         {
-            Postagem postagem = _context.Postagens.Where(p=>p.PostagemId == id).Include(p=>p.Usuario).Include(p=>p.Tag).FirstOrDefault();
+            Postagem? postagem = _context.Postagens.Where(p=>p.PostagemId == id)
+                .Include(p=>p.Usuario)
+                .Include(p=>p.Tag)
+                .Include(p=>p.Comentarios)
+                .FirstOrDefault();
+            if (postagem == null) return NotFound();
             return View(postagem);
         }
 
         [HttpPost]
         public IActionResult Cadastrar(Postagem postagem)
         {
-
+            postagem.UsuarioId = postagem.UsuarioId = _userManager.GetUserId(User); ;
             _context.Postagens.Add(postagem);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Comentar(Comentario comentario)
+        {
+            comentario.UsuarioId = _userManager.GetUserId(User);
+            _context.Comentarios.Add(comentario);
+            _context.SaveChanges();
+            return RedirectToAction("Visualizar", new { id = comentario.PostagemId});
         }
     }
 }

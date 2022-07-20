@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FourBlog.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FourBlog.Models
@@ -20,5 +21,12 @@ namespace FourBlog.Models
         public DateTime DataHora { get; set; }
 
         //Relacionamentos
+
+        public string UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
+
+        public int PostagemId { get; set; }
+        public Postagem Postagem { get; set; }
+
     }
 }

@@ -13,7 +13,7 @@
         <form asp-action="Index">
             <div class="input-group">
                 <select name="tag" class="form-select" asp-items="@ViewBag.Tags">
-                    <option value="">Tags...</option>
+                    <option value="" disabled>Tags...</option>
                 </select>
                 <input type="text" class="form-control" name="tag" placeholder="Filtrar por Tag" />
                 <button type="submit" class="btn btn-outline-primary btn-sm input-group-text"><i class="fa-solid fa-magnifying-glass"></i> </button>
@@ -28,13 +28,10 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                    Por: @postagem.Usuario.Nome
-                </div>
-                <div class="col text-center">
-                    <span class="badge rounded-pill bg-primary">@postagem.Tag.Nome</span>
+                   <span class="badge rounded-pill bg-primary">@postagem.Tag.Nome</span> Por: @postagem.Usuario.Nome
                 </div>
                 <div class="col text-end">
-                    @postagem.DataCriacao.ToString("dd/MM/yyyy - hh:mm")
+                    <span class="badge text-muted">@postagem.DataCriacao.ToString("dd/MM/yyyy - hh:mm")</span>
                 </div>
             </div>
         </div>

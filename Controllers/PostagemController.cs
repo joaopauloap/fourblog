@@ -20,7 +20,7 @@ namespace FourBlog.Controllers
 
         public IActionResult Index(string tag)
         {
-            var Postagens = _context.Postagens.Include(p=>p.Usuario).Include(p=>p.Tag).Where(p=>p.Tag.Nome.Contains(tag) || tag == null).ToList();
+            var Postagens = _context.Postagens.Include(p=>p.Usuario).Include(p=>p.Tag).Where(p=>p.Tag.Nome.Contains(tag) || tag == null).OrderByDescending(p => p.DataCriacao).ToList();
             List<Tag> ListaTags = _context.Tags.ToList();
             ViewBag.Tags = new SelectList(ListaTags, "Nome", "Nome");
             return View(Postagens);
@@ -39,9 +39,9 @@ namespace FourBlog.Controllers
             Postagem? postagem = _context.Postagens.Where(p=>p.PostagemId == id)
                 .Include(p=>p.Usuario)
                 .Include(p=>p.Tag)
-                .Include(p=>p.Comentarios)
                 .FirstOrDefault();
             if (postagem == null) return NotFound();
+            ViewBag.Comentarios = _context.Comentarios.Where(c=>c.PostagemId == id).Include(p=>p.Usuario);   
             return View(postagem);
         }
 

@@ -12,10 +12,10 @@
     <div class="form-floating mt-4">
         <form asp-action="Index">
             <div class="input-group">
-                <select name="tag" class="form-select" asp-items="@ViewBag.Tags">
-                    <option value="" disabled>Tags...</option>
+                <select name="tag" class="form-select" asp-items="@ViewBag.Tags" id="selectTag">
+                    <option value="">Tags...</option>
                 </select>
-                <input type="text" class="form-control" name="tag" placeholder="Filtrar por Tag" />
+                <input type="text" class="form-control" name="tag" placeholder="Filtrar por Tag" id="inputTag" />
                 <button type="submit" class="btn btn-outline-primary btn-sm input-group-text"><i class="fa-solid fa-magnifying-glass"></i> </button>
             </div>
         </form>
@@ -28,7 +28,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                   <span class="badge rounded-pill bg-primary">@postagem.Tag.Nome</span> Por: @postagem.Usuario.Nome
+                    <span class="badge rounded-pill bg-primary">@postagem.Tag.Nome</span> Por: @postagem.Usuario.Nome
                 </div>
                 <div class="col text-end">
                     <span class="badge text-muted">@postagem.DataCriacao.ToString("dd/MM/yyyy - hh:mm")</span>
@@ -45,4 +45,25 @@
             </div>
         </div>
     </div>
+}
+
+@section Scripts{
+    <script>
+        $('#inputTag').keyup(function(e) {
+            if (this.value.length > 0) {
+                $('#selectTag').prop('disabled', true);
+            } else {
+                $('#selectTag').prop('disabled', false);
+            }
+        });
+
+        $('#selectTag').on('change', function(e) {
+            if (this.value == '') {
+                $('#inputTag').prop('disabled', false);
+
+            } else {
+                $('#inputTag').prop('disabled', true);
+            }
+        });
+    </script>
 }

@@ -13,9 +13,9 @@
         <form asp-action="Index">
             <div class="input-group">
                 <select name="tag" class="form-select" asp-items="@ViewBag.Tags" id="selectTag">
-                    <option value="">Tags...</option>
+                    <option value="">Escolha uma tag...</option>
                 </select>
-                <input type="text" class="form-control" name="tag" placeholder="Filtrar por Tag" id="inputTag" />
+                <input type="text" class="form-control" name="tag" placeholder="ou digite uma tag" id="inputTag" />
                 <button type="submit" class="btn btn-outline-primary btn-sm input-group-text"><i class="fa-solid fa-magnifying-glass"></i> </button>
             </div>
         </form>

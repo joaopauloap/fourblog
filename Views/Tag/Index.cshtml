@@ -1,1 +1,45 @@
-﻿
+﻿@model TagViewModel
+@{
+    ViewData["title"] = "Tags";
+}
+<mensagem texto="@TempData["msg"]"></mensagem>
+<div class="accordion mx-auto w-75">
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne">
+                <b>Tags Cadastradas</b>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+
+                <ul>
+                    @foreach (Tag tag in Model.Tags)
+                    {
+                        <li><a asp-action="Editar" asp-route-id="@tag.TagId">@tag.Nome</a></li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo">
+                <b>Cadastrar nova Tag</b>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <form asp-action="Cadastrar">
+                    <div class="d-flex gap-4">
+                        <input asp-for="Tag.Nome" class="form-control" placeholder="Nome da Tag" />
+                        <input type="submit" class="btn btn-primary" value="Cadastrar Tag" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

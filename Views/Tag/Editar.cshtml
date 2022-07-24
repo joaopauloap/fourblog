@@ -1,1 +1,41 @@
-﻿
+﻿@model Tag
+@{
+    ViewData["title"] = "Editar Tag " + Model.Nome;
+}
+
+<h2 class="text-center my-4 gap-4">Editar Tag "@Model.Nome"</h2>
+
+<div class="mx-auto w-50">
+    <form asp-action="Editar">
+        <div class="form-floating mb-2">
+            <input asp-for="Nome" class="form-control" />
+            <label asp-for="Nome" class="form-label"></label>
+        </div>
+        <div class="d-flex gap-3">
+            <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalRemover"><i class="fa-solid fa-trash"></i> Remover</a>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-circle-check"></i> Salvar</button>
+        </div>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalRemover" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remover Tag?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente remover a tag <b>"@Model.Nome"</b>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form asp-action="Remover">
+                        <input type="hidden" name="TagId" value="@Model.TagId" />
+                        <button type="submit" class="btn btn-danger">Remover</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

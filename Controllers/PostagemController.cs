@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ProjetoFourBlog.ViewModels;
+using FourBlog.ViewModels;
 
 namespace FourBlog.Controllers
 {
@@ -53,6 +53,7 @@ namespace FourBlog.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Cadastrar(Postagem postagem)
         {
@@ -63,6 +64,7 @@ namespace FourBlog.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Comentar(Comentario comentario)
         {

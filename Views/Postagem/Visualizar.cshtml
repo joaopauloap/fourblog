@@ -44,9 +44,9 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <form asp-action="Comentar">
-                    <input type="hidden" name="PostagemId" value="@Model.Postagem.PostagemId">
+                    <input type="hidden" asp-for="Comentario.PostagemId" value="@Model.Postagem.PostagemId">
                     <div class="input-group-sm">
-                        <input type="text" class="form-control" name="Texto" placeholder="Comentar na postagem...">
+                        <input type="text" class="form-control" asp-for="Comentario.Texto" placeholder="Comentar na postagem...">
                     </div>
                 </form>
             }

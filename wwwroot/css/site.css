@@ -44,3 +44,7 @@ body {
 .nav-item:hover {
     transform:scale(1.1);
 }
+
+textarea{
+    height:100% !important;
+}

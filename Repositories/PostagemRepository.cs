@@ -29,7 +29,7 @@ namespace FourBlog.Repositories
 
         public List<Postagem> Listar(string filtro)
         {
-            return _context.Postagens.Include(p => p.Usuario).Include(p => p.Tag).Where(p => p.Tag.Nome.Contains(filtro) || filtro == null).OrderByDescending(p => p.DataCriacao).ToList();
+            return _context.Postagens.Include(p => p.Usuario).Include(p => p.Tag).Where(p => p.Tag.Nome.Contains(filtro) || p.Titulo.Contains(filtro) || filtro == null).OrderByDescending(p => p.DataCriacao).ToList();
         }
 
         public List<Postagem> ListarPorTagId(int id)

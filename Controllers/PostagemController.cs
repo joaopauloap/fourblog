@@ -87,7 +87,7 @@ namespace FourBlog.Controllers
             return RedirectToAction("Visualizar", new { id = comentario.PostagemId });
         }
 
-        public IActionResult ApagarPostagem(int id)
+        public IActionResult Remover(int id)
         {
             Postagem postagem = _postagemRepository.BuscarPorId(id);
             _postagemRepository.Remover(postagem);
@@ -95,5 +95,24 @@ namespace FourBlog.Controllers
             TempData["msg"] = "Postagem removida com sucesso!";
             return RedirectToAction("Index");
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Editar(int id)
+        {
+            Postagem postagem = _postagemRepository.BuscarPorId(id);
+            return View(postagem);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Editar(Postagem postagem)
+        {
+            _postagemRepository.Atualizar(postagem);
+            _postagemRepository.Salvar();
+            TempData["msg"] = $"Postagem {postagem.Titulo} editada com sucesso!";
+            return RedirectToAction("Index");
+        }
+
     }
 }

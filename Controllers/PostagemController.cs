@@ -57,6 +57,19 @@ namespace FourBlog.Controllers
                 Tags = new SelectList(tags, "TagId", "Nome")
             };
 
+            if (postagem.Titulo.Length == null)
+            {
+                ModelState.AddModelError("Postagem.Titulo", "O titulo é obrigatório!");
+                return View(viewModel);
+            }
+
+            if (postagem.Texto.Length == null)
+            {
+                ModelState.AddModelError("Postagem.Texto", "O texto é obrigatório");
+                return View(viewModel);
+            }
+
+
             if (postagem.Titulo.Length <= 2)
             {
                 ModelState.AddModelError("Postagem.Titulo", "O titulo deve ter mais de 2 caracteres!");
@@ -67,7 +80,7 @@ namespace FourBlog.Controllers
                 ModelState.AddModelError("Postagem.Titulo", "O titulo é limitado a 100 caracteres!");
             }
 
-            if (postagem.Texto.Length <= 2 || postagem.Texto == null)
+            if (postagem.Texto.Length <= 2)
             {
                 ModelState.AddModelError("Postagem.Texto", "O texto deve ter mais de 2 caracteres!");
             }
@@ -135,6 +148,18 @@ namespace FourBlog.Controllers
         [HttpPost]
         public IActionResult Editar(Postagem postagem)
         {
+            if (postagem.Titulo.Length == null)
+            {
+                ModelState.AddModelError("Postagem.Titulo", "O titulo é obrigatório!");
+                return View(postagem);
+            }
+
+            if (postagem.Texto.Length == null)
+            {
+                ModelState.AddModelError("Postagem.Texto", "O texto é obrigatório");
+                return View(postagem);
+            }
+
             if (postagem.Titulo.Length <= 2)
             {
                 ModelState.AddModelError("Titulo", "O titulo deve ter mais de 2 caracteres!");

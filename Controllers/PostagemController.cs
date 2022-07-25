@@ -17,12 +17,12 @@ namespace FourBlog.Controllers
         private IPostagemRepository _postagemRepository;
         private IComentarioRepository _comentarioRepository;
 
-        public PostagemController(UserManager<Usuario> userManager,ITagRepository tagRepository,IPostagemRepository postagemRepository,IComentarioRepository comentarioRepository)
+        public PostagemController(UserManager<Usuario> userManager, ITagRepository tagRepository, IPostagemRepository postagemRepository, IComentarioRepository comentarioRepository)
         {
             _userManager = userManager;
             _tagRepository = tagRepository;
             _postagemRepository = postagemRepository;
-            _comentarioRepository = comentarioRepository;   
+            _comentarioRepository = comentarioRepository;
         }
 
         public IActionResult Index(string tag)
@@ -51,11 +51,38 @@ namespace FourBlog.Controllers
         [HttpPost]
         public IActionResult Cadastrar(Postagem postagem)
         {
-            postagem.UsuarioId = postagem.UsuarioId = _userManager.GetUserId(User); ;
-            _postagemRepository.Cadastrar(postagem);
-            _postagemRepository.Salvar();
-            TempData["msg"] = $"Postagem {postagem.Titulo} cadastrada com sucesso!";
-            return RedirectToAction("Index");
+            List<Tag> tags = _tagRepository.Listar();
+            PostagemViewModel viewModel = new()
+            {
+                Tags = new SelectList(tags, "TagId", "Nome")
+            };
+
+            if (postagem.Titulo.Length <= 2)
+            {
+                ModelState.AddModelError("Postagem.Titulo", "O titulo deve ter mais de 2 caracteres!");
+            }
+
+            if (postagem.Titulo.Length > 99)
+            {
+                ModelState.AddModelError("Postagem.Titulo", "O titulo é limitado a 100 caracteres!");
+            }
+
+            if (postagem.Texto.Length <= 2 || postagem.Texto == null)
+            {
+                ModelState.AddModelError("Postagem.Texto", "O texto deve ter mais de 2 caracteres!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                postagem.UsuarioId = postagem.UsuarioId = _userManager.GetUserId(User);
+                postagem.DataCriacao = DateTime.Now;
+                _postagemRepository.Cadastrar(postagem);
+                _postagemRepository.Salvar();
+                TempData["msg"] = $"Postagem {postagem.Titulo} cadastrada com sucesso!";
+                return RedirectToAction("Index");
+            }
+
+            return View(viewModel);
         }
 
         public IActionResult Visualizar(int id)
@@ -108,10 +135,30 @@ namespace FourBlog.Controllers
         [HttpPost]
         public IActionResult Editar(Postagem postagem)
         {
-            _postagemRepository.Atualizar(postagem);
-            _postagemRepository.Salvar();
-            TempData["msg"] = $"Postagem {postagem.Titulo} editada com sucesso!";
-            return RedirectToAction("Index");
+            if (postagem.Titulo.Length <= 2)
+            {
+                ModelState.AddModelError("Titulo", "O titulo deve ter mais de 2 caracteres!");
+            }
+
+            if (postagem.Titulo.Length > 99)
+            {
+                ModelState.AddModelError("Titulo", "O titulo é limitado a 100 caracteres!");
+            }
+
+            if (postagem.Texto.Length <= 2)
+            {
+                ModelState.AddModelError("Texto", "O texto deve ter mais de 2 caracteres!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                postagem.Texto += $"\r\n (Editado às {DateTime.Now})";
+                _postagemRepository.Atualizar(postagem);
+                _postagemRepository.Salvar();
+                TempData["msg"] = $"Postagem {postagem.Titulo} editada com sucesso!";
+                return RedirectToAction("Index");
+            }
+            return View(postagem);
         }
 
     }

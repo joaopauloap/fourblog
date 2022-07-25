@@ -2,7 +2,7 @@
 @model Postagem
 
 @{
-    ViewData["Title"] = "Visualizar Postagem";
+    ViewData["Title"] = $"{Model.Titulo}";
 }
 
 <mensagem texto="@TempData["msg"]"></mensagem>
@@ -19,7 +19,7 @@
                 <span class="badge rounded-pill bg-primary">@Model.Tag.Nome</span> Por: @Model.Usuario.Nome
             </div>
             <div class="col text-end">
-                <span class="badge text-muted">@Model.DataCriacao.ToString("dd/MM/yyyy - hh:mm")</span>
+                <span class="badge text-muted">@Model.DataCriacao</span>
                 @if (SignInManager.UserManager.GetUserId(User) == Model.UsuarioId)
                 {
                     <a asp-action="Editar" asp-route-id="@Model.PostagemId"><i class="fa-solid fa-pencil"></i></a>
@@ -60,7 +60,7 @@
                 <form asp-action="Comentar">
                     <input type="hidden" name="PostagemId" value="@Model.PostagemId">
                     <div class="input-group-sm">
-                        <input type="text" class="form-control" name="Texto" placeholder="Comentar na postagem...">
+                        <input type="text" class="form-control" name="Texto" placeholder="Comentar na postagem..." required>
                     </div>
                 </form>
             }

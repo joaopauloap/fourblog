@@ -1,10 +1,11 @@
 ﻿@model PostagemViewModel
-
+@{
+    ViewData["title"] = "Cadastrar Postagem";
+}
 <div class="mx-auto w-75">
     <div class="mb-4">
         <h2>Criar uma nova postagem</h2>
     </div>
-
     <form asp-action="Cadastrar">
         <div class="row mb-3">
             <div class="col-3">
@@ -12,18 +13,21 @@
                 <select asp-for="Postagem.TagId" asp-items="@Model.Tags" class="form-select" required>
                     <option value="">Selecione</option>
                 </select>
+                <span asp-validation-for="Postagem.TagId" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="Postagem.Titulo" class="form-label"></label>
-                <input asp-for="Postagem.Titulo" class="form-control" placeholder="Título da minha postagem" required>
+                <input asp-for="Postagem.Titulo" class="form-control" placeholder="Título da minha postagem" required >
+                <span asp-validation-for="Postagem.Titulo" class="text-danger"></span>
             </div>
         </div>
         <div class="mb-3">
             <label asp-for="Postagem.Texto" class="form-label"></label>
-            <textarea asp-for="Postagem.Texto" class="form-control" rows="3" required></textarea>
+            <textarea asp-for="Postagem.Texto" class="form-control" rows="3" required ></textarea>
+            <span asp-validation-for="Postagem.Texto" class="text-danger"></span>
         </div>
         <div class="mt-3">
-            <a  asp-action="Index" class="btn btn-secondary">Voltar</a>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
             <input type="submit" class="btn btn-primary" value="Postar" />
         </div>
     </form>

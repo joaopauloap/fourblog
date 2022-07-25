@@ -13,7 +13,7 @@
     <form asp-action="Editar">
         <input type="hidden" asp-for="TagId"/>
         <div class="form-floating mb-2">
-            <input asp-for="Nome" class="form-control" />
+            <input asp-for="Nome" class="form-control" required/>
             <label asp-for="Nome" class="form-label"></label>
         </div>
         <div class="d-flex gap-3">

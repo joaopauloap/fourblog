@@ -9,12 +9,12 @@
 <div class="accordion mx-auto w-75">
 
     <div class="accordion-item">
-        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#painelCollapseTags">
                 <b>Tags Cadastradas</b>
             </button>
         </h2>
-        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+        <div id="painelCollapseTags" class="accordion-collapse collapse show">
             <div class="accordion-body">
 
                 <ul>
@@ -29,16 +29,16 @@
     </div>
 
     <div class="accordion-item">
-        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#painelCollapseCadastrar">
                 <b>Cadastrar nova Tag</b>
             </button>
         </h2>
-        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+        <div id="painelCollapseCadastrar" class="accordion-collapse collapse">
             <div class="accordion-body">
                 <form asp-action="Cadastrar">
                     <div class="d-flex gap-4">
-                        <input asp-for="Tag.Nome" class="form-control" placeholder="Nome da Tag" />
+                        <input asp-for="Tag.Nome" class="form-control" placeholder="Nome da Tag" required/>
                         <input type="submit" class="btn btn-primary" value="Cadastrar Tag" />
                     </div>
                 </form>

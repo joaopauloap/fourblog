@@ -13,6 +13,6 @@ namespace FourBlog.Models
         public string Nome { get; set; }
 
         //Relacionamentos
-        public List<Postagem> Postagens { get; set; }
+        public List<Postagem>? Postagens { get; set; }
     }
 }

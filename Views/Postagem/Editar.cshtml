@@ -14,7 +14,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col">
-                <span class="badge rounded-pill bg-primary">@Model.Tag.Nome</span>
+                @*<span class="badge rounded-pill bg-primary">@Model.Tag.Nome</span>*@
             </div>
             <div class="col text-end">
                 @if (SignInManager.UserManager.GetUserId(User) == Model.UsuarioId)
@@ -26,16 +26,20 @@
     </div>
     <form asp-action="Editar">
         <input type="hidden" asp-for="PostagemId" />
+        <input type="hidden" asp-for="DataCriacao" />
         <input type="hidden" asp-for="UsuarioId" />
         <input type="hidden" asp-for="TagId" />
+
         <div class="card-body">
             <div class="form-floating mb-3">
-                <input asp-for="Titulo" class="form-control" />
+                <input asp-for="Titulo" class="form-control" required/>
                 <label asp-for="Titulo" class="form-label"></label>
+                <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <textarea asp-for="Texto" class="form-control" rows="3" ></textarea>
+                <textarea asp-for="Texto" class="form-control" rows="3" required></textarea>
                 <label asp-for="Texto" class="form-label"></label>
+                <span asp-validation-for="Texto" class="text-danger"></span>
             </div>
         </div>
         <div class="card-footer text-center">

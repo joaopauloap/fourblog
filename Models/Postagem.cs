@@ -17,25 +17,26 @@ namespace FourBlog.Models
             //{
             //    UsuarioId = accessor.HttpContext.User.Claims.First().Value;
             //}
-
-            DataCriacao = DateTime.Now;
         }
 
         [Column("Id"), Key]
         public int PostagemId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O Título é obrigatório")]
+        [Display(Name = "Título")]
+        [StringLength(100, ErrorMessage = "O Título é limitado a 100 caracteres viu!")]
         public string Titulo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O Texto é obrigatório")]
         public string Texto { get; set; }
 
+        [Required(ErrorMessage = "O Data é obrigatório")]
         public DateTime DataCriacao { get; set; }
 
         //Relacionamentos
-        public Usuario Usuario { get; set; }
-        public string UsuarioId { get; set; }
-        public Tag Tag { get; set; }
+        public Usuario? Usuario { get; set; }
+        public string? UsuarioId { get; set; }
+        public Tag? Tag { get; set; }
         public int TagId { get; set; }
         public List<Comentario>? Comentarios { get; set; }
     }

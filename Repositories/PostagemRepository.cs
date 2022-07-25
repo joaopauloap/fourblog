@@ -19,7 +19,7 @@ namespace FourBlog.Repositories
 
         public Postagem BuscarPorId(int id)
         {
-            return _context.Postagens.Where(p => p.PostagemId == id).Include(p => p.Usuario).Include(p => p.Tag).Include(p => p.Comentarios).FirstOrDefault();
+            return _context.Postagens.Where(p => p.PostagemId == id).Include(p => p.Usuario).Include(p => p.Tag).Include(p => p.Comentarios).ThenInclude(p => p.Usuario).FirstOrDefault();
         }
 
         public void Cadastrar(Postagem postagem)

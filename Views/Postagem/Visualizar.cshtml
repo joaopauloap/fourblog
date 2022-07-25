@@ -1,5 +1,5 @@
 ﻿@inject SignInManager<Usuario> SignInManager
-@model PostagemViewModel
+@model Postagem
 
 @{
     ViewData["Title"] = "Visualizar Postagem";
@@ -16,11 +16,11 @@
     <div class="card-header">
         <div class="row">
             <div class="col">
-                <span class="badge rounded-pill bg-primary">@Model.Postagem.Tag.Nome</span> Por: @Model.Postagem.Usuario.Nome
+                <span class="badge rounded-pill bg-primary">@Model.Tag.Nome</span> Por: @Model.Usuario.Nome
             </div>
             <div class="col text-end">
-                <span class="badge text-muted">@Model.Postagem.DataCriacao.ToString("dd/MM/yyyy - hh:mm")</span>
-                @if (SignInManager.UserManager.GetUserId(User) == Model.Postagem.UsuarioId)
+                <span class="badge text-muted">@Model.DataCriacao.ToString("dd/MM/yyyy - hh:mm")</span>
+                @if (SignInManager.UserManager.GetUserId(User) == Model.UsuarioId)
                 {
                     <a href="#" data-bs-toggle="modal" data-bs-target="#modalRemover"><i class="fa-solid fa-trash"></i></a>
                 }
@@ -28,8 +28,8 @@
         </div>
     </div>
     <div class="card-body">
-        <h5 class="card-title">@Model.Postagem.Titulo</h5>
-        <p class="card-text">@Model.Postagem.Texto</p>
+        <h5 class="card-title">@Model.Titulo</h5>
+        <p class="card-text">@Model.Texto</p>
     </div>
     <div class="card-footer text-muted">
         <div class="collapse mt-2 mb-4" id="collapseComentarios">
@@ -58,9 +58,9 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <form asp-action="Comentar">
-                    <input type="hidden" asp-for="Comentario.PostagemId" value="@Model.Postagem.PostagemId">
+                    <input type="hidden" name="PostagemId" value="@Model.PostagemId">
                     <div class="input-group-sm">
-                        <input type="text" class="form-control" asp-for="Comentario.Texto" placeholder="Comentar na postagem...">
+                        <input type="text" class="form-control" name="Texto" placeholder="Comentar na postagem...">
                     </div>
                 </form>
             }
@@ -91,7 +91,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form asp-action="ApagarPostagem" asp-route-id="@Model.Postagem.PostagemId">
+                <form asp-action="ApagarPostagem" asp-route-id="@Model.PostagemId">
                     <button type="submit" class="btn btn-danger">Remover</button>
                 </form>
             </div>

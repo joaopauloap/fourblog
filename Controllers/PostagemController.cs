@@ -64,13 +64,7 @@ namespace FourBlog.Controllers
 
             if (postagem == null) return NotFound();
 
-            PostagemViewModel viewModel = new PostagemViewModel()
-            {
-                Postagem = postagem,
-                Comentarios = _comentarioRepository.BuscarComentariosPorPostagemId(id)
-            };
-
-            return View(viewModel);
+            return View(postagem);
         }
 
         [Authorize]

@@ -56,6 +56,17 @@ namespace FourBlog.Controllers
         [HttpPost]
         public IActionResult Remover(Tag tag)
         {
+            if (tag.TagId == 1) {
+                TempData["erro"] = $"Esta tag não pode ser removida";
+                return RedirectToAction("Index");
+            }
+
+            List<Postagem> posts = _context.Postagens.Where(t => t.TagId == tag.TagId).ToList();
+            foreach (Postagem postagem in posts)
+            {
+                postagem.TagId = 1;
+                _context.Postagens.Update(postagem);
+            }
             _context.Tags.Remove(tag);
             _context.SaveChanges();
             TempData["msg"] = $"Tag removida com sucesso!";

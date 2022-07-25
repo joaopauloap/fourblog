@@ -35,3 +35,11 @@ body {
     display:block;
     position:absolute;
 }
+
+.navbar-brand:hover {
+    transform:scale(1.1);
+}
+
+.nav-item:hover {
+    transform:scale(1.1);
+}

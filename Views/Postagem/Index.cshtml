@@ -1,10 +1,10 @@
-﻿@model List<Postagem>
+﻿@model PostagemViewModel
 
 @{
     ViewData["Title"] = "Postagens";
 }
 
-
+<mensagem texto="@TempData["msg"]"></mensagem>
 <a class="btn-fixed" asp-action="Cadastrar"><i class="fa-solid fa-circle-plus fa-3x"></i><label class="badge bg-primary text-wrap hide mt-1">Nova Postagem</label></a>
 
 <div class="text-center mb-4 mx-auto w-50">
@@ -12,7 +12,7 @@
     <div class="form-floating mt-4">
         <form asp-action="Index">
             <div class="input-group">
-                <select name="tag" class="form-select" asp-items="@ViewBag.Tags" id="selectTag">
+                <select name="tag" class="form-select" asp-items="Model.Tags" id="selectTag">
                     <option value="">Escolha uma tag...</option>
                 </select>
                 <input type="text" class="form-control" name="tag" placeholder="ou digite uma tag" id="inputTag" />
@@ -22,7 +22,7 @@
     </div>
 </div>
 
-@foreach (Postagem postagem in Model)
+@foreach (Postagem postagem in Model.Postagens)
 {
     <div class="card mb-5 mx-auto w-50">
         <div class="card-header">

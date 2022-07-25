@@ -3,10 +3,15 @@
     ViewData["title"] = "Editar Tag " + Model.Nome;
 }
 
-<h2 class="text-center my-4 gap-4">Editar Tag "@Model.Nome"</h2>
+<a asp-action="Index" class="d-flex text-decoration-none">
+    <i class="fa-solid fa-circle-left fa-2x me-2"></i>
+    Voltar para tags
+</a>
 
 <div class="mx-auto w-50">
+<h2 class="text-center mb-4 gap-4">Editar Tag "@Model.Nome"</h2>
     <form asp-action="Editar">
+        <input type="hidden" asp-for="TagId"/>
         <div class="form-floating mb-2">
             <input asp-for="Nome" class="form-control" />
             <label asp-for="Nome" class="form-label"></label>

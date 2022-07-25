@@ -5,6 +5,8 @@
     ViewData["Title"] = "Visualizar Postagem";
 }
 
+<mensagem texto="@TempData["msg"]"></mensagem>
+
 <a asp-action="Index" class="d-flex text-decoration-none">
     <i class="fa-solid fa-circle-left fa-2x me-2"></i>
     Voltar para postagens
@@ -18,6 +20,10 @@
             </div>
             <div class="col text-end">
                 <span class="badge text-muted">@Model.Postagem.DataCriacao.ToString("dd/MM/yyyy - hh:mm")</span>
+                @if (SignInManager.UserManager.GetUserId(User) == Model.Postagem.UsuarioId)
+                {
+                    <a asp-action="ApagarPostagem" asp-route-id="@Model.Postagem.PostagemId"><i class="fa-solid fa-trash"></i></a>
+                }
             </div>
         </div>
     </div>
@@ -31,13 +37,21 @@
             <hr />
             @foreach (Comentario comentario in Model.Comentarios)
             {
-                <div class="mb-3">
-                    <p>
-                        <b>@comentario.Usuario.Nome</b>: @comentario.Texto
-                        <span class="badge text-black-50 bg-opacity-75">
-                            @comentario.DataHora
-                        </span>
-                    </p>
+                <div class="mb-3 row">
+                    <div class="col">
+                        <p class="ms-3">
+                            <b>@comentario.Usuario.Nome</b>: @comentario.Texto
+                            <span class="badge text-black-50 bg-opacity-75">
+                                @comentario.DataHora
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-1">
+                        @if (SignInManager.UserManager.GetUserId(User) == comentario.UsuarioId)
+                        {
+                            <a asp-action="ApagarComentario" asp-route-id="@comentario.ComentarioId"><i class="fa-solid fa-trash"></i></a>
+                        }
+                    </div>
                 </div>
             }
 

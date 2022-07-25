@@ -1,5 +1,6 @@
 ﻿using FourBlog.Areas.Identity.Data;
 using FourBlog.Models;
+using FourBlog.Repositories;
 using FourBlog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,17 +10,19 @@ namespace FourBlog.Controllers
     [Authorize]
     public class TagController : Controller
     {
-        private FourBlogContext _context;
-        public TagController(FourBlogContext context)
+        private ITagRepository _tagRepository;
+        private IPostagemRepository _postagemRepository;
+        public TagController(ITagRepository tagRepository, IPostagemRepository postagemRepository)
         {
-            _context = context;
+            _tagRepository = tagRepository;
+            _postagemRepository = postagemRepository;
         }
 
         public IActionResult Index()
         {
             TagViewModel viewModel = new()
             {
-                Tags = _context.Tags.ToList()
+                Tags = _tagRepository.Listar()
             };
             return View(viewModel);
         }
@@ -27,8 +30,8 @@ namespace FourBlog.Controllers
         [HttpPost]
         public IActionResult Cadastrar(Tag tag)
         {
-            _context.Tags.Add(tag);
-            _context.SaveChanges();
+           _tagRepository.Cadastrar(tag);
+            _tagRepository.Salvar();
             TempData["msg"] = $"Tag {tag.Nome} cadastrada com sucesso!";
             return RedirectToAction("Index");
         }
@@ -36,7 +39,7 @@ namespace FourBlog.Controllers
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            Tag tag = _context.Tags.Find(id);
+            Tag tag = _tagRepository.BuscarPorId(id);
 
             if (tag == null)
                 return NotFound();
@@ -47,8 +50,8 @@ namespace FourBlog.Controllers
         [HttpPost]
         public IActionResult Editar(Tag tag)
         {
-            _context.Tags.Update(tag);
-            _context.SaveChanges();
+            _tagRepository.Atualizar(tag);
+            _tagRepository.Salvar();
             TempData["msg"] = $"Tag {tag.Nome} editada com sucesso!";
             return RedirectToAction("Index");
         }
@@ -61,14 +64,15 @@ namespace FourBlog.Controllers
                 return RedirectToAction("Index");
             }
 
-            List<Postagem> posts = _context.Postagens.Where(t => t.TagId == tag.TagId).ToList();
+            List<Postagem> posts = _postagemRepository.ListarPorTagId(tag.TagId);
             foreach (Postagem postagem in posts)
             {
                 postagem.TagId = 1;
-                _context.Postagens.Update(postagem);
+                _postagemRepository.Atualizar(postagem);
             }
-            _context.Tags.Remove(tag);
-            _context.SaveChanges();
+
+            _tagRepository.Remover(tag);
+            _tagRepository.Salvar();
             TempData["msg"] = $"Tag removida com sucesso!";
             return RedirectToAction("Index");
         }

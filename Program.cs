@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using FourBlog.Areas.Identity.Data;
+using FourBlog.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("FourBlogContextConnection") ?? throw new InvalidOperationException("Connection string 'FourBlogContextConnection' not found.");
 
@@ -12,6 +14,10 @@ builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireCo
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IPostagemRepository, PostagemRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();
+
 
 builder.Services.AddHttpContextAccessor();
 

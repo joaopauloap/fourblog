@@ -15,6 +15,7 @@ html {
 
 body {
     margin-bottom: 60px;
+    caret-color: transparent;
 }
 
 .text-justify {

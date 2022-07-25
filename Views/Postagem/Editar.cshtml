@@ -1,52 +1,58 @@
 ﻿@inject SignInManager<Usuario> SignInManager
-@model Postagem
+@model PostagemViewModel
 
 @{
     ViewData["Title"] = "Editar Postagem";
 }
 
-<a asp-action="Visualizar" asp-route-id="@Model.PostagemId" class="d-flex text-decoration-none">
+<a asp-action="Visualizar" asp-route-id="@Model.Postagem.PostagemId" class="d-flex text-decoration-none">
     <i class="fa-solid fa-circle-left fa-2x me-2"></i>
     Voltar para a postagem
 </a>
 
-<div class="card mb-5 mx-auto w-50">
-    <div class="card-header">
-        <div class="row">
-            <div class="col">
-                @*<span class="badge rounded-pill bg-primary">@Model.Tag.Nome</span>*@
-            </div>
-            <div class="col text-end">
-                @if (SignInManager.UserManager.GetUserId(User) == Model.UsuarioId)
-                {
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalRemover"><i class="fa-solid fa-trash"></i></a>
-                }
+<div class="text-center my-3">
+<h3>Editar a postagem '@Model.Postagem.Titulo'</h3>
+</div>
+
+<form asp-action="Editar">
+    <div class="card mb-5 mx-auto w-50">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <select asp-for="Postagem.TagId" asp-items="Model.Tags" class="badge rounded-pill bg-primary" required>
+                    </select>
+                    <span asp-validation-for="Postagem.TagId" class="text-danger"></span>
+                </div>
+                <div class="col text-end">
+                    @if (SignInManager.UserManager.GetUserId(User) == Model.Postagem.UsuarioId)
+                    {
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#modalRemover"><i class="fa-solid fa-trash"></i></a>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <form asp-action="Editar">
-        <input type="hidden" asp-for="PostagemId" />
-        <input type="hidden" asp-for="DataCriacao" />
-        <input type="hidden" asp-for="UsuarioId" />
-        <input type="hidden" asp-for="TagId" />
+        <input type="hidden" asp-for="Postagem.PostagemId" />
+        <input type="hidden" asp-for="Postagem.DataCriacao" />
+        <input type="hidden" asp-for="Postagem.UsuarioId" />
+        <input type="hidden" asp-for="Postagem.TagId" />
 
         <div class="card-body">
             <div class="form-floating mb-3">
-                <input asp-for="Titulo" class="form-control" required/>
-                <label asp-for="Titulo" class="form-label"></label>
-                <span asp-validation-for="Titulo" class="text-danger"></span>
+                <input asp-for="Postagem.Titulo" class="form-control" required />
+                <label asp-for="Postagem.Titulo" class="form-label"></label>
+                <span asp-validation-for="Postagem.Titulo" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <textarea asp-for="Texto" class="form-control" rows="3" required></textarea>
-                <label asp-for="Texto" class="form-label"></label>
-                <span asp-validation-for="Texto" class="text-danger"></span>
+                <textarea asp-for="Postagem.Texto" class="form-control" rows="3" required></textarea>
+                <label asp-for="Postagem.Texto" class="form-label"></label>
+                <span asp-validation-for="Postagem.Texto" class="text-danger"></span>
             </div>
         </div>
         <div class="card-footer text-center">
             <button type="submit" class="btn btn-success">Salvar edição</button>
         </div>
-    </form>
-</div>
+    </div>
+</form>
 
 <!-- Modal -->
 <div class="modal fade" id="modalRemover" tabindex="-1">
@@ -61,7 +67,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form asp-action="Remover" asp-route-id="@Model.PostagemId">
+                <form asp-action="Remover" asp-route-id="@Model.Postagem.PostagemId">
                     <button type="submit" class="btn btn-danger">Remover</button>
                 </form>
             </div>

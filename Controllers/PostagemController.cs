@@ -91,7 +91,7 @@ namespace FourBlog.Controllers
                 postagem.DataCriacao = DateTime.Now;
                 _postagemRepository.Cadastrar(postagem);
                 _postagemRepository.Salvar();
-                TempData["msg"] = $"Postagem {postagem.Titulo} cadastrada com sucesso!";
+                TempData["msg"] = $"Postagem '{postagem.Titulo}' cadastrada com sucesso!";
                 return RedirectToAction("Index");
             }
 
@@ -130,9 +130,9 @@ namespace FourBlog.Controllers
         public IActionResult Remover(int id)
         {
             Postagem postagem = _postagemRepository.BuscarPorId(id);
+            TempData["msg"] = $"Postagem '{postagem.Titulo}' removida com sucesso!";
             _postagemRepository.Remover(postagem);
             _postagemRepository.Salvar();
-            TempData["msg"] = "Postagem removida com sucesso!";
             return RedirectToAction("Index");
         }
 
@@ -140,24 +140,35 @@ namespace FourBlog.Controllers
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            Postagem postagem = _postagemRepository.BuscarPorId(id);
-            return View(postagem);
+            List<Tag> tags = _tagRepository.Listar();
+            PostagemViewModel viewModel = new()
+            {
+                Postagem = _postagemRepository.BuscarPorId(id),
+                Tags = new SelectList(tags, "TagId", "Nome")
+            };
+            return View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
         public IActionResult Editar(Postagem postagem)
         {
+            List<Tag> tags = _tagRepository.Listar();
+            PostagemViewModel viewModel = new()
+            {
+                Tags = new SelectList(tags, "TagId", "Nome")
+            };
+
             if (postagem.Titulo.Length == null)
             {
                 ModelState.AddModelError("Postagem.Titulo", "O titulo é obrigatório!");
-                return View(postagem);
+                return View(viewModel);
             }
 
             if (postagem.Texto.Length == null)
             {
                 ModelState.AddModelError("Postagem.Texto", "O texto é obrigatório");
-                return View(postagem);
+                return View(viewModel);
             }
 
             if (postagem.Titulo.Length <= 2)
@@ -180,10 +191,10 @@ namespace FourBlog.Controllers
                 postagem.Texto += $"\r\n (Editado às {DateTime.Now})";
                 _postagemRepository.Atualizar(postagem);
                 _postagemRepository.Salvar();
-                TempData["msg"] = $"Postagem {postagem.Titulo} editada com sucesso!";
+                TempData["msg"] = $"Postagem '{postagem.Titulo}' editada com sucesso!";
                 return RedirectToAction("Index");
             }
-            return View(postagem);
+            return View(viewModel);
         }
 
     }

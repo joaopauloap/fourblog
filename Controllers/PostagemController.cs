@@ -140,10 +140,19 @@ namespace FourBlog.Controllers
         [HttpGet]
         public IActionResult Editar(int id)
         {
+            string usuarioLogadoId = _userManager.GetUserId(User);
+            Postagem postagem = _postagemRepository.BuscarPorId(id);
+
+            if (usuarioLogadoId != postagem.UsuarioId)
+            {
+                TempData["erro"] = "Você não pode editar esta postagem!";
+                return RedirectToAction("Visualizar", new { id = id });
+            }
+
             List<Tag> tags = _tagRepository.Listar();
             PostagemViewModel viewModel = new()
             {
-                Postagem = _postagemRepository.BuscarPorId(id),
+                Postagem = postagem,
                 Tags = new SelectList(tags, "TagId", "Nome")
             };
             return View(viewModel);
